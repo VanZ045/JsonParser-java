@@ -9,6 +9,7 @@ public class ObjectNode extends ASTNode{
         value.put(key,node);
     }
 
+
     @Override
     public String toString(int indent) {
         StringBuilder sb = new StringBuilder();

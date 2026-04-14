@@ -25,7 +25,15 @@ public class Parser {
     }
 
     public ASTNode parse(){
-        return  parseValue();
+        ASTNode root = parseValue();
+
+        if (iterator < tokens.size()-1) {
+            throw new RuntimeException(
+                    "Unexpected token after end of valid JSON value: " + advance()
+            );
+        }
+
+        return root;
     }
 
     public ASTNode parseValue(){
@@ -101,11 +109,9 @@ public class Parser {
         return jsonInput;
     }
 
-//    System.out.println("JSON read:");
-//        System.out.println(input);
     public static void printTree(String input) {
         List<Token> tokens = Tokenizer.tokenize(input);
-        Tokenizer.printTokens(tokens);
+//        Tokenizer.printTokens(tokens);
 
         Parser parser = new Parser(tokens);
 
@@ -113,4 +119,5 @@ public class Parser {
         System.out.println("============================");
         System.out.println(parser.parse().toString(0));
     }
+
 }
